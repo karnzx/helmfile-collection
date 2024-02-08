@@ -1,0 +1,13 @@
+repositories:
+- name: bitnami
+  url: https://charts.bitnami.com/bitnami
+
+releases:
+- name: mariadb-galera
+  chart: bitnami/mariadb-galera
+  values:
+    - values.yaml
+- name: mariadb-galera-component
+  chart: ./components
+  # values:
+  #   - namePrefix: -components
