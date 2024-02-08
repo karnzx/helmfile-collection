@@ -1,0 +1,18 @@
+architecture: replication
+auth:
+  database: jera
+  defaultAuthenticationPlugin: caching_sha2_password
+  password: password
+  replicationPassword: replicationPassword
+  rootPassword: secret
+  username: user
+primary:
+  extraFlags: --slow-query-log=ON --table-open-cache=50000
+  resources:
+    requests:
+      memory: 650Mi
+secondary:
+  extraFlags: --slow-query-log=ON --table-open-cache=50000
+  resources:
+    requests:
+      memory: 500Mi
