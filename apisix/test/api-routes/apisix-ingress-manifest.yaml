@@ -1,0 +1,24 @@
+apiVersion: apisix.apache.org/v2beta3
+kind: ApisixRoute
+metadata:
+  name: test-api-routes
+spec:
+  http:
+    - name: route-1
+      match:
+        hosts:
+          - apiroutes.apisix.local
+        paths:
+          - /v1
+      backends:
+        - serviceName: mock-api-v1
+          servicePort: 8080
+    - name: route-2
+      match:
+        hosts:
+          - apiroutes.apisix.local
+        paths:
+          - /v2
+      backends:
+        - serviceName: mock-api-v2
+          servicePort: 8080

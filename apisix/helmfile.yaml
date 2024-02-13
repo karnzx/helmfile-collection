@@ -1,0 +1,13 @@
+repositories:
+- name: apisix
+  url: https://charts.apiseven.com
+
+releases:
+- name: apisix
+  chart: apisix/apisix
+  version: 1.11.0
+  namespace: ingress-apisix
+  values:
+    - values.yaml
+- name: components
+  chart: ./components

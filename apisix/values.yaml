@@ -1,0 +1,32 @@
+# https://github.com/apache/apisix-helm-chart/tree/master/charts/apisix
+# when dashboard or ingress-controller enabled, admin.allow.ipList is "0.0.0.0/0"
+
+admin:
+  credentials:
+    secretName: apisix-credentials
+
+# gateway type for Cloud is loadBlancer else use NodePort (default)
+# gateway:
+#   type: LoadBalancer
+#   # annotations:
+#   #   service.beta.kubernetes.io/aws-load-balancer-type: nlb # AWS NLB
+
+# https://github.com/apache/apisix-helm-chart/tree/master/charts/apisix-dashboard
+dashboard:
+  enabled: true
+  ingress:
+    enabled: true
+    hosts: 
+      - host: apisix-dashboard.local
+        paths:
+          - /
+        className: ""
+        annotations: {}
+
+# https://github.com/apache/apisix-helm-chart/tree/master/charts/apisix-ingress-controller
+ingress-controller:
+  enabled: true
+  config:
+    apisix:
+      existingSecret: apisix-credentials
+      existingSecretAdminKeyKey: admin
