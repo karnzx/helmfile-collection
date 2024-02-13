@@ -1,0 +1,5 @@
+# gateway type for Cloud is loadBlancer else use NodePort (default)
+gateway:
+  type: LoadBalancer
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb # AWS NLB

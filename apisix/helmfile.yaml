@@ -1,3 +1,7 @@
+environments:
+  aws: {}
+  
+---
 repositories:
 - name: apisix
   url: https://charts.apiseven.com
@@ -8,6 +12,6 @@ releases:
   version: 1.11.0
   namespace: ingress-apisix
   values:
-    - values.yaml
+    - ./config/apisix/{{ .Environment.Name }}.yaml
 - name: components
   chart: ./components

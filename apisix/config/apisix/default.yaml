@@ -5,11 +5,8 @@ admin:
   credentials:
     secretName: apisix-credentials
 
-# gateway type for Cloud is loadBlancer else use NodePort (default)
-# gateway:
-#   type: LoadBalancer
-#   # annotations:
-#   #   service.beta.kubernetes.io/aws-load-balancer-type: nlb # AWS NLB
+gateway:
+  type: NodePort # default
 
 # https://github.com/apache/apisix-helm-chart/tree/master/charts/apisix-dashboard
 dashboard:
