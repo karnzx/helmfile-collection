@@ -5,6 +5,7 @@ repositories:
 releases:
 - name: mariadb-galera
   chart: bitnami/mariadb-galera
+  version: 11.3.2
   values:
     - values.yaml
 - name: mariadb-galera-component
