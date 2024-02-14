@@ -14,12 +14,12 @@ dashboard:
   ingress:
     enabled: true
     hosts: 
-      - host: apisix-dashboard.local
-        paths:
-          - /
-        className: ""
-        annotations: {}
-        tls: []
+    - host: apisix-dashboard.local
+      paths:
+        - /
+    className: ""
+    annotations: {}
+    tls: []
   config:
     authentication:
       users:
