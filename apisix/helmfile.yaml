@@ -15,3 +15,4 @@ releases:
     - ./config/apisix/{{ .Environment.Name }}.yaml
 - name: components
   chart: ./components
+  namespace: ingress-apisix
