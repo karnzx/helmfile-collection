@@ -3,3 +3,7 @@ gateway:
   type: LoadBalancer
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-type: nlb # AWS NLB
+
+apisix:
+  ssl:
+    enabled: true
