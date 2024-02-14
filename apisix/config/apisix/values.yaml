@@ -20,6 +20,7 @@ dashboard:
     className: ""
     annotations: {}
     tls: []
+
   config:
     authentication:
       users:
