@@ -8,6 +8,10 @@ admin:
 gateway:
   type: NodePort # default
 
+apisix:
+  ssl:
+    enabled: true
+
 # https://github.com/apache/apisix-helm-chart/tree/master/charts/apisix-dashboard
 dashboard:
   enabled: true
