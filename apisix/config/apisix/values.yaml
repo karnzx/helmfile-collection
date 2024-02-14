@@ -19,6 +19,11 @@ dashboard:
           - /
         className: ""
         annotations: {}
+  config:
+    authentication:
+      users:
+        - username: admin
+          password: admin
 
 # https://github.com/apache/apisix-helm-chart/tree/master/charts/apisix-ingress-controller
 ingress-controller:

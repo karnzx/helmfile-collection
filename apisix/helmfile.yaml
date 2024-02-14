@@ -1,5 +1,10 @@
 environments:
-  aws: {}
+  default:
+    values:
+    - environments/default/values.yaml
+  aws:
+    values:
+      - config/apisix/aws.yaml
   
 ---
 repositories:
@@ -12,7 +17,8 @@ releases:
   version: 1.11.0
   namespace: ingress-apisix
   values:
-    - ./config/apisix/{{ .Environment.Name }}.yaml
+    - config/apisix/values.yaml
 - name: components
   chart: ./components
   namespace: ingress-apisix
+  
