@@ -6,7 +6,9 @@ admin:
     secretName: apisix-credentials
 
 gateway:
-  type: NodePort # default
+  type: NodePort
+  tls: 
+    enabled: true
 
 # https://github.com/apache/apisix-helm-chart/tree/master/charts/apisix-dashboard
 dashboard:
