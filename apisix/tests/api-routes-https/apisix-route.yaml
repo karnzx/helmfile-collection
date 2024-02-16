@@ -1,0 +1,64 @@
+apiVersion: apisix.apache.org/v2
+kind: ApisixRoute
+metadata:
+  name: mock-api-https
+spec:
+  http:
+    - name: route-1
+      match:
+        hosts:
+          - apiroutes.apisix.local
+        paths:
+          - /
+          - /v1
+      backends:
+        - serviceName: mock-api-v1
+          servicePort: 8080
+    - name: route-2
+      match:
+        hosts:
+          - apiroutes.apisix.local
+        paths:
+          - /auth
+      backends:
+        - serviceName: mock-api-v2
+          servicePort: 8080
+      authentication:
+        enable: true
+        type: basicAuth
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixConsumer
+metadata:
+  name: john-doe
+spec:
+  authParameter:
+    basicAuth:
+      value:
+        username: john
+        password: doe
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: mock-api-apisix-cert
+spec:
+  dnsNames:
+    - "apiroutes.apisix.local"
+  issuerRef:
+    kind: Issuer # default if not define
+    name: apisix-ca
+  secretName: apiroutes.apisix.local-tls
+  # renewBefore: 0h55m0s # for test
+  # duration: 1h0m0s # for test
+---
+apiVersion: apisix.apache.org/v2
+kind: ApisixTls
+metadata:
+  name: mock-api-tls
+spec:
+  hosts:
+    - apiroutes.apisix.local
+  secret:
+    name: apiroutes.apisix.local-tls
+    namespace: test # required
