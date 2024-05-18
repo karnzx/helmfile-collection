@@ -1,0 +1,72 @@
+controller:
+  enableStatefulSet: true
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      memory: 2Gi
+
+configs:
+  cm:
+    url: https://argocd.example.com
+    admin.enabled: true
+    kustomize.buildOptions: --enable-helm
+
+  params:
+    reposerver.enable.git.submodule: false
+
+server:
+  replicas: 1
+  env:
+    - name: ARGOCD_API_SERVER_REPLICAS
+      value: '1'
+  resources:
+    requests:
+      cpu: 100m
+      memory: 150Mi
+    limits:
+      memory: 200Mi
+
+repoServer:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 50m
+      memory: 1Gi
+    limits:
+      memory: 1Gi
+
+  serviceAccount:
+    create: true
+
+notifications:
+  logLevel: info
+
+  extraEnv:
+    - name: TZ
+      value: Asia/Bangkok
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
+  argocdUrl: https://argocd.example.com
+
+  secret:
+    create: false
+
+dex:
+  enabled: false
+
+applicationSet:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      memory: 128Mi
+
