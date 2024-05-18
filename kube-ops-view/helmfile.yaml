@@ -1,0 +1,10 @@
+repositories:
+- name: christianhuth
+  url: https://charts.christianhuth.de
+
+releases:
+- name: kube-ops-view
+  chart: christianhuth/kube-ops-view
+  version: 3.5.1 # 23.5.0
+  values:
+    - values.yaml
