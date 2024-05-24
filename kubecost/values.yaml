@@ -1,0 +1,22 @@
+# kubectl port-forward --namespace kubecost deployment/cost-analyzer 9090
+
+global:
+  prometheus:
+    enabled: false
+    fqdn: http://kube-prometheus-stack-prometheus.kube-prometheus-stack.svc:9090
+  grafana:
+    enabled: false
+    domainName: kube-prometheus-stack-grafana.kube-prometheus-stack.svc
+
+serviceMonitor:
+  enabled: true
+  additionalLabels:
+    release:  kube-prometheus-stack
+  networkCosts:
+    enabled: true
+    additionalLabels:
+      release:  kube-prometheus-stack
+prometheusRule:
+  enabled: true
+  additionalLabels:
+    release:  kube-prometheus-stack
