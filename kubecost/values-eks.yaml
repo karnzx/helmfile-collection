@@ -39,3 +39,6 @@ kubecostProductConfigs:
   awsSpotDataBucket: spot-datafeed 
   awsSpotDataPrefix: ""
   projectID: "" # AccountID on AWS
+
+networkCosts:
+  enabled: true

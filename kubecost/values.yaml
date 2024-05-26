@@ -21,3 +21,7 @@ prometheusRule:
   additionalLabels:
     release:  kube-prometheus-stack
 
+persistentVolume:
+  size: 10Gi
+  dbSize: 10.0Gi
+  enabled: true  
