@@ -14,22 +14,13 @@ forecasting:
   fullImageName: public.ecr.aws/kubecost/kubecost-modeling:v0.1.12
 
 networkCosts:
+  enabled: true
   image:
     repository: public.ecr.aws/kubecost/kubecost-network-costs
 
 clusterController:
   image:
     repository: public.ecr.aws/kubecost/cluster-controller
-
-prometheus:
-  server:
-    image:
-      repository: public.ecr.aws/kubecost/prometheus
-
-  configmapReload:
-    prometheus:
-      image:
-        repository: public.ecr.aws/kubecost/prometheus-config-reloader
 
 # NOTE: spotDataFeed data in bucket can be delete after three days of retention.
 kubecostProductConfigs:
@@ -39,6 +30,3 @@ kubecostProductConfigs:
   awsSpotDataBucket: spot-datafeed 
   awsSpotDataPrefix: ""
   projectID: "" # AccountID on AWS
-
-networkCosts:
-  enabled: true
