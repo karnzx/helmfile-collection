@@ -31,3 +31,11 @@ prometheus:
       image:
         repository: public.ecr.aws/kubecost/prometheus-config-reloader
 
+# NOTE: spotDataFeed data in bucket can be delete after three days of retention.
+kubecostProductConfigs:
+  spotLabel: eks.amazonaws.com/capacityType
+  spotLabelValue: SPOT
+  awsSpotDataRegion: ap-southeast-1
+  awsSpotDataBucket: spot-datafeed 
+  awsSpotDataPrefix: ""
+  projectID: "" # AccountID on AWS

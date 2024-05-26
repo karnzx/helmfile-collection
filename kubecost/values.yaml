@@ -21,6 +21,3 @@ prometheusRule:
   additionalLabels:
     release:  kube-prometheus-stack
 
-reporting:
-  productAnalytics: false
-
