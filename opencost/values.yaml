@@ -1,0 +1,20 @@
+opencost:
+  exporter:
+    defaultClusterId: "default-cluster"
+    extraEnv:
+      EMIT_KSM_V1_METRICS: "false"
+      EMIT_KSM_V1_METRICS_ONLY: "true"
+      LOG_LEVEL: warn #error
+  prometheus:
+    internal:
+      enabled: true
+      serviceName: kube-prometheus-stack-prometheus
+      namespaceName: kube-prometheus-stack
+      port: 9090
+  ui:
+    enabled: true
+  metrics:
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: kube-prometheus-stack

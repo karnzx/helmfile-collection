@@ -1,0 +1,10 @@
+repositories:
+- name: opencost
+  url: https://opencost.github.io/opencost-helm-chart
+
+releases:
+- name: opencost
+  chart: opencost/opencost
+  version: 1.37.0
+  values:
+    - values.yaml
