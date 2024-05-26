@@ -24,7 +24,8 @@ clusterController:
 # NOTE: For more integration see
 # https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations
 
-# Below config are for spot instance only. Cloud Integration can stored as configmap, file or webUI instead of below helm value.
+# Below config are for spot instance only. Cloud Integration config can stored as configmap, file or webUI instead of below helm value.
+# If you set any kubecostProductConfigs from the Helm chart, all changes via the front end will be overridden on pod restart.
 # https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations/aws-spot-instances
 kubecostProductConfigs:
   spotLabel: eks.amazonaws.com/capacityType
