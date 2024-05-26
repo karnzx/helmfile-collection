@@ -23,6 +23,7 @@ clusterController:
     repository: public.ecr.aws/kubecost/cluster-controller
 
 # NOTE: spotDataFeed data in bucket can be delete after three days of retention.
+# Below config are for spot instance only https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations/aws-spot-instances
 kubecostProductConfigs:
   spotLabel: eks.amazonaws.com/capacityType
   spotLabelValue: SPOT
@@ -30,3 +31,8 @@ kubecostProductConfigs:
   awsSpotDataBucket: spot-datafeed 
   awsSpotDataPrefix: ""
   projectID: "" # AccountID on AWS
+
+serviceAccount:
+  create: true  
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::XXXXXXXXXXXXXX:role/ROLENAME
