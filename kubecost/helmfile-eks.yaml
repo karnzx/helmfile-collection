@@ -1,0 +1,11 @@
+repositories:
+- name: cost-analyzer
+  url: https://kubecost.github.io/cost-analyzer/
+
+releases:
+- name: kubecost
+  chart: cost-analyzer/cost-analyzer
+  version: 2.2.5
+  values:
+    - values.yaml
+    - values-eks.yaml

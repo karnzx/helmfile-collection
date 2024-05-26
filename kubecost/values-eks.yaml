@@ -1,0 +1,33 @@
+# WHEN DEPLOY ON AWS EKS
+# Use Kubecost provides optimized bundle
+
+# NOTE: For more integration see
+# https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations
+
+kubecostFrontend:
+  image: public.ecr.aws/kubecost/frontend
+
+kubecostModel:
+  image: public.ecr.aws/kubecost/cost-model
+
+forecasting:
+  fullImageName: public.ecr.aws/kubecost/kubecost-modeling:v0.1.12
+
+networkCosts:
+  image:
+    repository: public.ecr.aws/kubecost/kubecost-network-costs
+
+clusterController:
+  image:
+    repository: public.ecr.aws/kubecost/cluster-controller
+
+prometheus:
+  server:
+    image:
+      repository: public.ecr.aws/kubecost/prometheus
+
+  configmapReload:
+    prometheus:
+      image:
+        repository: public.ecr.aws/kubecost/prometheus-config-reloader
+

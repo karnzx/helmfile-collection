@@ -20,3 +20,7 @@ prometheusRule:
   enabled: true
   additionalLabels:
     release:  kube-prometheus-stack
+
+reporting:
+  productAnalytics: false
+
