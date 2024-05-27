@@ -16,6 +16,9 @@ networkCosts:
   enabled: true
   image:
     repository: public.ecr.aws/kubecost/kubecost-network-costs
+  config:
+    services:
+      amazon-web-services: true
 
 clusterController:
   image:
