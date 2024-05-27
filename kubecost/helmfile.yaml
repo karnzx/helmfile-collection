@@ -8,4 +8,5 @@ releases:
   version: 2.2.5
   values:
     - values.yaml
-    # - values-eks.yaml
+    - values-eks-spot-datafeed.yaml
+    # - values-eks-cloud-bill.yaml

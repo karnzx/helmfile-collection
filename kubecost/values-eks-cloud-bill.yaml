@@ -1,0 +1,55 @@
+# WHEN DEPLOY ON AWS EKS
+# Use Kubecost provides optimized bundle
+
+# NOTE: spotDataFeed data in bucket can be delete after three days of retention. Athena result are seven days
+
+kubecostFrontend:
+  image: public.ecr.aws/kubecost/frontend
+
+kubecostModel:
+  image: public.ecr.aws/kubecost/cost-model
+
+forecasting:
+  fullImageName: public.ecr.aws/kubecost/kubecost-modeling:v0.1.12
+
+networkCosts:
+  enabled: true
+  image:
+    repository: public.ecr.aws/kubecost/kubecost-network-costs
+  config:
+    services:
+      amazon-web-services: true
+
+clusterController:
+  image:
+    repository: public.ecr.aws/kubecost/cluster-controller
+
+# NOTE: For more integration see
+# https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations
+
+# Setup for spot instance. and AWS Cloud Billing Integration 
+# https://docs.kubecost.com/install-and-configure/install/cloud-integration/aws-cloud-integrations/aws-spot-instances
+# The config of Cloud Cost Integration can stored as configmap, file or webUI instead of below helm value.
+# If you set any kubecostProductConfigs from the Helm chart, all changes via the front end will be overridden on pod restart.
+kubecostProductConfigs:
+  spotLabel: eks.amazonaws.com/capacityType
+  spotLabelValue: SPOT
+  awsSpotDataRegion: ap-southeast-1
+  awsSpotDataBucket: spot-datafeed 
+  awsSpotDataPrefix: ""
+  projectID: "" # AccountID on AWS
+  # AWS Cloud Billing Integration
+  athenaProjectID: "" # The AWS AccountID where the Athena CUR is
+  athenaBucketName: "s3://ATHENA_RESULT_BUCKET"
+  athenaRegion: ap-southeast-1
+  athenaDatabase: athenacurcfn_cost_report
+  athenaTable: costreport
+  athenaWorkgroup: "primary" # default
+  # masterPayerARN: "" # for multi-account setup where athena not in same account as kubecost
+  ## multi-cloud MIGHT use cloudIntegrationSecret instead for define multiple clouds
+  # cloudIntegrationSecret: cloud-integration
+
+serviceAccount:
+  create: true  
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::XXXXXXXXXXXXXX:role/kubecost

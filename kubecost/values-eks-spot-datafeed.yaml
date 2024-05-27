@@ -42,4 +42,4 @@ kubecostProductConfigs:
 serviceAccount:
   create: true  
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::XXXXXXXXXXXXXX:role/ROLENAME
+    eks.amazonaws.com/role-arn: arn:aws:iam::XXXXXXXXXXXXXX:role/kubecost
