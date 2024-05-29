@@ -25,3 +25,7 @@ persistentVolume:
   size: 10Gi
   dbSize: 10.0Gi
   enabled: true  
+
+tolerations: []
+  
+affinity: {}
