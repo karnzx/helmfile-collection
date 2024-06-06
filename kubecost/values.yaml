@@ -2,10 +2,10 @@
 
 global:
   prometheus:
-    enabled: false
+    enabled: false # to use exists prometheus below
     fqdn: http://kube-prometheus-stack-prometheus.kube-prometheus-stack.svc:9090
   grafana:
-    enabled: false
+    enabled: false # to use exists grafana below
     domainName: kube-prometheus-stack-grafana.kube-prometheus-stack.svc
 
 serviceMonitor:
@@ -21,11 +21,16 @@ prometheusRule:
   additionalLabels:
     release:  kube-prometheus-stack
 
-persistentVolume:
-  size: 10Gi
-  dbSize: 10.0Gi
+persistentVolume: # app config storage
+  size: 5Gi
+  dbSize: 5.0Gi
   enabled: true  
 
 tolerations: []
   
 affinity: {}
+
+forecasting:
+  tolerations: []
+    
+  affinity: {}
