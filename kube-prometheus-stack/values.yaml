@@ -1,0 +1,153 @@
+## https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+
+## Provide a name to substitute for the full names of resources
+# fullnameOverride: "kube-prometheus-stack"
+
+## Create default rules for monitoring the cluster
+defaultRules:
+  create: true
+
+## Configuration for alertmanager
+## ref: https://prometheus.io/docs/alerting/alertmanager/
+alertmanager:
+  enabled: true
+
+  ## Settings affecting alertmanagerSpec
+  ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#alertmanagerspec
+  alertmanagerSpec:
+    ## Time duration Alertmanager shall retain data for. Default is '120h', and must match the regular expression
+    ## [0-9]+(ms|s|m|h) (milliseconds seconds minutes hours).
+    retention: 120h
+    resources: {}
+    # requests:
+    #   memory: 400Mi
+    tolerations: []
+    affinity: {}
+    # default storage is emptyData
+    storage: {}
+
+## Using default values from https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+grafana:
+  enabled: true
+  replicas: 1
+  deploymentStrategy: # To prevent multiattach-volume
+    type: Recreate
+  ## Other options are: browser or a specific timezone, i.e. Europe/Luxembourg
+  defaultDashboardsTimezone: Asia/Bangkok
+
+  ## Use an existing secret for the admin user.
+  admin:
+    existingSecret: kube-prometheus-stack-grafana
+    userKey: admin-user
+    passwordKey: admin-password
+
+  persistence:
+    enabled: true
+    accessModes:
+      - ReadWriteOnce
+    size: 5Gi
+
+  ## Grafana's primary configuration
+  ## NOTE: values in map will be converted to ini format
+  ## ref: http://docs.grafana.org/installation/configuration/
+  # grafana.ini:
+      
+  ingress:
+    enabled: true
+    # ingressClassName: nginx
+    # annotations: {}
+    hosts:
+      - example.com
+    path: /
+    pathType: Prefix
+    tls:
+      - secretName: grafana-general-tls
+        hosts:
+          - example.com
+
+kubelet:
+  enabled: true
+  serviceMonitor:
+    ## Lens: To see cluster's pod usage on cluster overview properly
+    ## https://github.com/lensapp/lens/blob/master/troubleshooting/custom-prometheus.md
+    metricRelabelings:
+      - action: replace
+        sourceLabels:
+        - node
+        targetLabel: instance
+
+kubeEtcd:
+  enabled: false # Disable in case of stealth control-plane (EKS, GKE, DOKS)
+
+kubeScheduler:
+  enabled: false # Disable in case of stealth control-plane (EKS, GKE, DOKS)
+
+kubeControllerManager:
+  enabled: false # Disable in case of stealth control-plane (EKS, GKE, DOKS)
+
+## Deploy node exporter as a daemonset to all nodes
+nodeExporter:
+  enabled: true
+
+## Configuration for prometheus-node-exporter subchart
+##
+prometheus-node-exporter:
+  prometheus:
+    monitor:
+      enabled: true
+
+      ## Lens: To see node metrics properly
+      ## https://github.com/lensapp/lens/blob/master/troubleshooting/custom-prometheus.md
+      relabelings:
+        - action: replace
+          regex: (.*)
+          # escape sign
+          replacement: $1
+          sourceLabels:
+          - __meta_kubernetes_pod_node_name
+          targetLabel: kubernetes_node
+
+## Manages Prometheus and Alertmanager components
+prometheusOperator:
+  enabled: true
+
+  tolerations: []
+  ## Assign custom affinity rules to the prometheus operator
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+  affinity: {}
+
+## Deploy a Prometheus instance
+prometheus:
+  enabled: true
+
+  ## Settings affecting prometheusSpec
+  ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#prometheusspec
+  prometheusSpec:
+    # https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config
+    additionalScrapeConfigs: []
+      # - job_name: k8s-cluster-autoscaler
+      #   scheme: http
+      #   static_configs:
+      #     - targets: 
+      #       - 'cluster-autoscaler-aws-cluster-autoscaler.kube-system.svc:8085'
+          
+    tolerations: []
+    affinity: {}
+    resources: {}
+    # requests:
+    #   memory: 400Mi
+
+    retention: 14d
+    retentionSize: 23GB
+
+    ## Prometheus StorageSpec for persistent data
+    ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/user-guides/storage.md
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 25Gi
+

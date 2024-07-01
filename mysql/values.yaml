@@ -1,6 +1,6 @@
 architecture: replication
 auth:
-  database: jera
+  database: db1
   defaultAuthenticationPlugin: caching_sha2_password
   password: password
   replicationPassword: replicationPassword
